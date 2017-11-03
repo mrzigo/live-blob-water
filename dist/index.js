@@ -8,6 +8,12 @@ var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = [
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _html2canvas = require('html2canvas');
+
+var _html2canvas2 = _interopRequireDefault(_html2canvas);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var sqrt = Math.sqrt;
@@ -68,11 +74,11 @@ var Dlob = function () {
   _createClass(Dlob, [{
     key: 'initialize',
     value: function initialize(params) {
-      if (!params.src) return console.warn('Нет исходного изображения');
+      if (!params.in) return console.warn('Нет исходного jquery-елемента');
       if (!params.sectors || params.sectors && params.sectors.length === 0) return console.warn('Не обазначена форма капли');
       if (!params.el) return console.warn('Нет jquery-елемента для вставки canvas'); // TODO избавиться от jquery
-      this.el = params.el;
-      this.src = params.src;
+      this.el = params.out;
+      this.src = params.in;
       this.sectors = params.sectors;
       this.cyclical = params.cyclical !== undefined ? params.cyclical : true;
       this.speed = params.speed || 100;
@@ -438,23 +444,40 @@ var Dlob = function () {
         offset: lengthVector$$1, // смещение
         alfa: atan2(dy, dx) // угол наклона
       };
-      this.image.onload = function () {
-        _this2.layout = {
-          lens: _this2.context.lens.getImageData(0, 0, _this2.width, _this2.height),
-          dark: _this2.context.lens.getImageData(0, 0, _this2.width, _this2.height),
-          glare: _this2.context.lens.getImageData(0, 0, _this2.width, _this2.height)
-        };
-        _this2.context.lens.drawImage(_this2.image, 0, 0);
-        _this2.layout.origin = _this2.context.lens.getImageData(0, 0, _this2.width, _this2.height);
-        _this2.id = setInterval(function () {
-          return _this2.animation();
-        }, _this2.speed);
-        _this2.animation();
-      };
-      this.image.src = this.src;
-      this.el.append(this.canvas.lens); // отдаем наложение слоев браузеру
-      this.el.append(this.canvas.dark);
-      this.el.append(this.canvas.glare);
+      (0, _html2canvas2.default)(this.src, {
+        onrendered: function onrendered(canvas) {
+          _this2.layout = {
+            lens: _this2.context.lens.getImageData(0, 0, _this2.width, _this2.height),
+            dark: _this2.context.lens.getImageData(0, 0, _this2.width, _this2.height),
+            glare: _this2.context.lens.getImageData(0, 0, _this2.width, _this2.height)
+          };
+          _this2.image.src = canvas.toDataURL();
+          _this2.context.lens.drawImage(_this2.image, 0, 0);
+          _this2.layout.origin = _this2.context.lens.getImageData(0, 0, _this2.width, _this2.height);
+          _this2.id = setInterval(function () {
+            return _this2.animation();
+          }, _this2.speed);
+          _this2.animation();
+          _this2.el.append(_this2.canvas.lens); // отдаем наложение слоев браузеру
+          _this2.el.append(_this2.canvas.dark);
+          _this2.el.append(_this2.canvas.glare);
+        }
+      });
+      // this.image.onload = () => {
+      //   this.layout = {
+      //     lens: this.context.lens.getImageData(0, 0, this.width, this.height),
+      //     dark: this.context.lens.getImageData(0, 0, this.width, this.height),
+      //     glare: this.context.lens.getImageData(0, 0, this.width, this.height),
+      //   }
+      //   this.context.lens.drawImage(this.image, 0, 0)
+      //   this.layout.origin = this.context.lens.getImageData(0, 0, this.width, this.height)
+      //   this.id = setInterval(() => this.animation(), this.speed)
+      //   this.animation()
+      // }
+      // this.image.src = this.src
+      // this.el.append(this.canvas.lens) // отдаем наложение слоев браузеру
+      // this.el.append(this.canvas.dark)
+      // this.el.append(this.canvas.glare)
     }
   }]);
 

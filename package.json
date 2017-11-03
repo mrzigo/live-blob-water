@@ -17,5 +17,8 @@
   "author": "mr.zigo (Kovalenko Dmitriy)",
   "private": true,
   "license": "none",
-  "description": "Allows you to add a live drop to the image"
+  "description": "Allows you to add a live drop to the image",
+  "dependencies": {
+    "html2canvas": "^0.5.0-beta4"
+  }
 }
