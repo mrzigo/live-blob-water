@@ -3,7 +3,7 @@ import babelrc from 'babelrc-rollup';
 
 export default {
   entry: 'src/index.js',
-  dest: 'dist/live-blob.js',
+  dest: 'dist/index.js',
   plugins: [
     babel(babelrc())
   ]

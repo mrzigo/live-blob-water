@@ -2,16 +2,16 @@
 
 Позволяет добавить на статическое изображение "живую" каплю воды
 
-![alt text](https://raw.githubusercontent.com/mrzigo/live_blob/master/logo.gif)
-![alt text](https://raw.githubusercontent.com/mrzigo/live_blob/master/logo2.gif)
+![alt text](https://raw.githubusercontent.com/mrzigo/live-blob-water/master/logo.gif)
+![alt text](https://raw.githubusercontent.com/mrzigo/live-blob-water/master/logo2.gif)
 
 ### 0. install
 ```
-   npm install --save git+https://github.com/mrzigo/live_blob.git
+   npm install --save git+https://github.com/mrzigo/live-blob-water.git
 ```
 ### 1. Require
 ```
-  import Blob from 'live-blob' // or var Blob = require('live-blob');
+  import Blob from 'live-blob-water' // or var Blob = require('live-blob-water');
 ```
 
 ### 2. Using
@@ -66,16 +66,17 @@ const myBlob = new Blob(blobData)
 
 ### 3. Change
 ```
-  git clone https://github.com/mrzigo/live_blob
-  cd live_blob
+  git clone https://github.com/mrzigo/live-blob-water
+  cd live-blob-water
   npm i
   // выполнить изменения которые хотите внести в проект
   npm run build
-  // использовать файл **dist/live-blob.js**
+  // использовать файл **dist/live-blob-water.js**
 ```
 
 ### 4. Схема преобразования
-![alt text](https://raw.githubusercontent.com/mrzigo/live_blob/master/schema.png)
+![alt text](https://raw.githubusercontent.com/mrzigo/live-blob-water/master/schema.png)
+
 Красная форма перетекает в зеленую, первый сектор можно задать так:
 sectors[0] = {
   a: [A, A', 0, 0.01],

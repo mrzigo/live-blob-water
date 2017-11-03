@@ -1,9 +1,9 @@
 {
   "name": "live-blob-water",
-  "main": "dist/live-blob.js",
+  "main": "dist/index.js",
   "version": "0.0.1",
   "scripts": {
-    "build": "./node_modules/.bin/rollup -c && babel ./dist/live-blob.js --presets es2015,stage-3 --out-file dist/live-blob.js"
+    "build": "./node_modules/.bin/rollup -c && babel ./dist/index.js --presets es2015,stage-3 --out-file dist/index.js"
   },
   "devDependencies": {
     "babel": "^6.23.0",
