@@ -1,7 +1,7 @@
 {
   "name": "live-blob-water",
   "main": "dist/index.js",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "build": "./node_modules/.bin/rollup -c && babel ./dist/index.js --presets es2015,stage-3 --out-file dist/index.js"
   },

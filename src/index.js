@@ -30,6 +30,7 @@ class Dlob {
     this.genReferencePoints = this.genReferencePoints.bind(this)
     this.animation = this.animation.bind(this)
     this.generateCanvas = this.generateCanvas.bind(this)
+    this.loadImage = this.loadImage.bind(this)
     this.render = this.render.bind(this)
     this.initialize(params)
   }
@@ -39,17 +40,16 @@ class Dlob {
       return console.warn('Нет исходного jquery-елемента')
     if ((!params.sectors) || (params.sectors && params.sectors.length === 0))
       return console.warn('Не обазначена форма капли')
-    if (!params.out)
-      return console.warn('Нет jquery-елемента для вставки canvas') // TODO избавиться от jquery
-    this.el = params.out
+    this.el = params.out ? params.out : params.in // разместить там же или в новое место
     this.src = params.in
     this.sectors = params.sectors
     this.cyclical = params.cyclical !== undefined ? params.cyclical : true
     this.speed = params.speed || 100
     this.width = params.width || 100
     this.height = params.height || 100
-    this.left = params.left || '0px'
-    this.top = params.top || '0px'
+    this.left = params.left || 0
+    this.top = params.top || 0
+    this.kof_lens = params.lens ||  0.2,
     this.center = params.center || [this.width / 2, this.height / 2]
     this.lightVector = [60, 60]
     this.render()
@@ -92,7 +92,7 @@ class Dlob {
     const a = atan2(y2-y1, x2-x1)
     for (let r = 0; r <= length; r = r + 1) {
       const [x, y] = [round(x1+cos(a)*r), round(y1+sin(a)*r)]
-      const k = (r / length) * (r / length) * 0.2 + 1 // коэфициент линзы
+      const k = (r / length) * (r / length) * this.kof_lens + 1 // коэфициент линзы
       const [originX, originY] = [round(x1+cos(a)*r*k), round(y1+sin(a)*r*k)]
       const origin = (originX + originY * this.width) * 4
       this.pencil(
@@ -273,12 +273,22 @@ class Dlob {
 
   generateCanvas(top, left, width, height) {
     let canvas = document.createElement('canvas')
-    canvas.style.left = left
-    canvas.style.top = top
+    canvas.style.left = left instanceof String ? left : left + 'px'
+    canvas.style.top = top instanceof String ? top : top + 'px'
     canvas.style.position = 'absolute'
     canvas.width = width
     canvas.height = height
     return canvas
+  }
+
+  loadImage() {
+    this.context.lens.drawImage(this.image, this.left, this.top, this.width, this.height, 0, 0, this.width, this.height)
+    this.layout.origin = this.context.lens.getImageData(0, 0, this.width, this.height)
+    this.id = setInterval(() => this.animation(), this.speed)
+    this.animation()
+    this.el.append(this.canvas.lens) // отдаем наложение слоев браузеру
+    this.el.append(this.canvas.dark)
+    this.el.append(this.canvas.glare)
   }
 
   render() {
@@ -292,7 +302,6 @@ class Dlob {
       dark: this.generateCanvas(this.top, this.left, this.width, this.height), // тень
       glare: this.generateCanvas(this.top, this.left, this.width, this.height), // блик
     }
-
     this.context = {
       lens: this.canvas.lens.getContext('2d'),
       dark: this.canvas.dark.getContext('2d'),
@@ -303,38 +312,17 @@ class Dlob {
       offset: lengthVector, // смещение
       alfa: atan2(dy, dx), // угол наклона
     }
-    html2canvas(this.src, {
-      onrendered: (canvas) => {
-        this.layout = {
-          lens: this.context.lens.getImageData(0, 0, this.width, this.height),
-          dark: this.context.lens.getImageData(0, 0, this.width, this.height),
-          glare: this.context.lens.getImageData(0, 0, this.width, this.height),
+    setTimeout(() => html2canvas(this.src, {
+        onrendered: (canvas) => {
+          this.layout = {
+            lens: this.context.lens.getImageData(0, 0, this.width, this.height),
+            dark: this.context.lens.getImageData(0, 0, this.width, this.height),
+            glare: this.context.lens.getImageData(0, 0, this.width, this.height),
+          }
+          this.image.src = canvas.toDataURL()
+          this.image.onload = this.loadImage
         }
-        this.image.src = canvas.toDataURL()
-        this.context.lens.drawImage(this.image, 0, 0)
-        this.layout.origin = this.context.lens.getImageData(0, 0, this.width, this.height)
-        this.id = setInterval(() => this.animation(), this.speed)
-        this.animation()
-        this.el.append(this.canvas.lens) // отдаем наложение слоев браузеру
-        this.el.append(this.canvas.dark)
-        this.el.append(this.canvas.glare)
-      }
-    })
-    // this.image.onload = () => {
-    //   this.layout = {
-    //     lens: this.context.lens.getImageData(0, 0, this.width, this.height),
-    //     dark: this.context.lens.getImageData(0, 0, this.width, this.height),
-    //     glare: this.context.lens.getImageData(0, 0, this.width, this.height),
-    //   }
-    //   this.context.lens.drawImage(this.image, 0, 0)
-    //   this.layout.origin = this.context.lens.getImageData(0, 0, this.width, this.height)
-    //   this.id = setInterval(() => this.animation(), this.speed)
-    //   this.animation()
-    // }
-    // this.image.src = this.src
-    // this.el.append(this.canvas.lens) // отдаем наложение слоев браузеру
-    // this.el.append(this.canvas.dark)
-    // this.el.append(this.canvas.glare)
+    }), 1)
   }
 
 }
