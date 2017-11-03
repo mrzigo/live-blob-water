@@ -39,7 +39,7 @@ class Dlob {
       return console.warn('Нет исходного jquery-елемента')
     if ((!params.sectors) || (params.sectors && params.sectors.length === 0))
       return console.warn('Не обазначена форма капли')
-    if (!params.el)
+    if (!params.out)
       return console.warn('Нет jquery-елемента для вставки canvas') // TODO избавиться от jquery
     this.el = params.out
     this.src = params.in

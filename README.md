@@ -1,6 +1,6 @@
 # Live blob (Живая капля)
 
-Позволяет добавить на статическое изображение "живую" каплю воды
+Позволяет добавить на DOM-елемент "живую" каплю воды
 
 ![alt text](https://raw.githubusercontent.com/mrzigo/live-blob-water/master/logo.gif)
 ![alt text](https://raw.githubusercontent.com/mrzigo/live-blob-water/master/logo2.gif)
