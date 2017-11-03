@@ -44,6 +44,7 @@ class Dlob {
     this.src = params.in
     this.sectors = params.sectors
     this.cyclical = params.cyclical !== undefined ? params.cyclical : true
+    this.glare = params.glare !== undefined ? params.glare : true
     this.speed = params.speed || 100
     this.width = params.width || 100
     this.height = params.height || 100
@@ -185,7 +186,6 @@ class Dlob {
 
   // рисует блик
   glare() {
-    const figure = this
     if (this.glare === false) return false // no undefined
     const radius = this.getRadius()
     const radius1 = this.getRadius(-PI/10)

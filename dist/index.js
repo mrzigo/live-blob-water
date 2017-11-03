@@ -81,6 +81,7 @@ var Dlob = function () {
       this.src = params.in;
       this.sectors = params.sectors;
       this.cyclical = params.cyclical !== undefined ? params.cyclical : true;
+      this.glare = params.glare !== undefined ? params.glare : true;
       this.speed = params.speed || 100;
       this.width = params.width || 100;
       this.height = params.height || 100;
@@ -282,7 +283,6 @@ var Dlob = function () {
   }, {
     key: 'glare',
     value: function glare() {
-      var figure = this;
       if (this.glare === false) return false; // no undefined
       var radius = this.getRadius();
       var radius1 = this.getRadius(-PI / 10);
