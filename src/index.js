@@ -188,9 +188,9 @@ class Dlob {
     const figure = this
     if (this.glare === false) return false // no undefined
     const radius = this.getRadius()
-    if (radius.length > 0) {
-      const radius1 = this.getRadius(-PI/10)
-      const radius2 = this.getRadius(+PI/10)
+    const radius1 = this.getRadius(-PI/10)
+    const radius2 = this.getRadius(+PI/10)
+    if ((radius.length > 0) && (radius1.length > 0) && (radius2.length > 0)) {
       const lightLen = this.lightParams.length / 6 // сдвиг блика
       this.context.glare.clearRect(0,0, this.width, this.height)
 

@@ -284,9 +284,9 @@ var Dlob = function () {
       var figure = this;
       if (this.glare === false) return false; // no undefined
       var radius = this.getRadius();
-      if (radius.length > 0) {
-        var radius1 = this.getRadius(-PI / 10);
-        var radius2 = this.getRadius(+PI / 10);
+      var radius1 = this.getRadius(-PI / 10);
+      var radius2 = this.getRadius(+PI / 10);
+      if (radius.length > 0 && radius1.length > 0 && radius2.length > 0) {
         var lightLen = this.lightParams.length / 6; // сдвиг блика
         this.context.glare.clearRect(0, 0, this.width, this.height);
 
