@@ -66,8 +66,8 @@ const myBlob = new Blob(blobData)
 
 ### 3. Change
 ```
-  git clone https://github.com/mrzigo/live_drop
-  cd live_drop
+  git clone https://github.com/mrzigo/live_blob
+  cd live_blob
   npm i
   // выполнить изменения которые хотите внести в проект
   npm run build
@@ -89,3 +89,4 @@ sectors[0] = {
 (r / length) * (r / length) * 0.2 + 1
 ```
 где r - параметр на отрезке [0,1], length - длинна отрезка OK
+подробности в коде метода lensEffect (src/index.js)
