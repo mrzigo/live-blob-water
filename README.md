@@ -6,10 +6,13 @@
 ![alt text](https://raw.githubusercontent.com/mrzigo/live_blob/master/logo2.gif)
 
 ### 0. install
-   **npm install --save git+https://github.com/mrzigo/live_blob.git**
-
+```
+   npm install --save git+https://github.com/mrzigo/live_blob.git
+```
 ### 1. Require
-  **import Blob from 'live-blob'**
+```
+  import Blob from 'live-blob' // or var Blob = require('live-blob');
+```
 
 ### 2. Using
 Входящие данные:
@@ -62,9 +65,27 @@ const myBlob = new Blob(blobData)
 сразу же произойдет автоматическая загрузка картинки по URL src и вставка капли в el, а так же запуска анимации, который прекратиться сразу как вся форма перейдет в конечные точки и если cyclical === false, иначе начнется обратная трансформация в начальную форму
 
 ### 3. Change
+```
   git clone https://github.com/mrzigo/live_drop
   cd live_drop
   npm i
-  выполнить изменения которые хотите внести в проект
+  // выполнить изменения которые хотите внести в проект
   npm run build
-  использовать файл **dist/live-blob.js**
+  // использовать файл **dist/live-blob.js**
+```
+
+### 4. Схема преобразования
+![alt text](https://raw.githubusercontent.com/mrzigo/live_blob/master/logo2.gif)
+Красная форма перетекает в зеленую, первый сектор можно задать так:
+sectors[0] = {
+  a: [A, A', 0, 0.01],
+  b: [E, E', 0, 0.01],
+  c: [B, B', 0, 0.01],
+}
+на рисунке выше должно быть понятно как происходит анимация и как задовать остальные сектора. секторов не обязательно 4, может быть больше, может меньше.
+
+линза накладывается по прямой от центра (т.О) до точки лежащей на кривой Безье, на схеме отрезок: ОК, коэффициент преобразования следующий:
+```
+(r / length) * (r / length) * 0.2 + 1
+```
+где r - параметр на отрезке [0,1], length - длинна отрезка OK
