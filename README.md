@@ -5,16 +5,14 @@
 ![alt text](https://raw.githubusercontent.com/mrzigo/live-blob-water/master/logo.gif)
 ![alt text](https://raw.githubusercontent.com/mrzigo/live-blob-water/master/logo2.gif)
 
-### 0. install
+### установка
 ```
    npm install --save git+https://github.com/mrzigo/live-blob-water.git
 ```
-### 1. Require
+### Использование
 ```
   import Blob from 'live-blob-water' // or var Blob = require('live-blob-water');
 ```
-
-### 2. Using
 Входящие данные:
 ```
 const blobData = {
@@ -64,7 +62,7 @@ const myBlob = new Blob(blobData)
 ```
 сразу же произойдет автоматическая загрузка картинки по URL src и вставка капли в el, а так же запуска анимации, который прекратиться сразу как вся форма перейдет в конечные точки и если cyclical === false, иначе начнется обратная трансформация в начальную форму
 
-### 3. Change
+### Внесение своих изменений
 ```
   git clone https://github.com/mrzigo/live-blob-water
   cd live-blob-water
@@ -74,7 +72,7 @@ const myBlob = new Blob(blobData)
   // использовать файл **dist/live-blob-water.js**
 ```
 
-### 4. Схема преобразования
+### Схема преобразования
 ![alt text](https://raw.githubusercontent.com/mrzigo/live-blob-water/master/schema.png)
 
 Красная форма перетекает в зеленую, первый сектор можно задать так:
