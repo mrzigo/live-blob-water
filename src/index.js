@@ -49,7 +49,7 @@ class Dlob {
     this.height = params.height || 100
     this.left = params.left || 0
     this.top = params.top || 0
-    this.kof_lens = params.lens ||  0.2,
+    this.kof_lens = params.lens ||  0.2
     this.center = params.center || [this.width / 2, this.height / 2]
     this.lightVector = [60, 60]
     this.render()
@@ -188,9 +188,9 @@ class Dlob {
     const figure = this
     if (this.glare === false) return false // no undefined
     const radius = this.getRadius()
-    const radius1 = this.getRadius(-PI/10)
-    const radius2 = this.getRadius(+PI/10)
-    if ((radius.length > 0) && (radius1.length > 0) && (radius2.length > 0)) {
+    if (radius.length > 0) {
+      const radius1 = this.getRadius(-PI/10)
+      const radius2 = this.getRadius(+PI/10)
       const lightLen = this.lightParams.length / 6 // сдвиг блика
       this.context.glare.clearRect(0,0, this.width, this.height)
 
