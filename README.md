@@ -75,7 +75,7 @@ const myBlob = new Blob(blobData)
 ```
 
 ### 4. Схема преобразования
-![alt text](https://raw.githubusercontent.com/mrzigo/live_blob/master/logo2.gif)
+![alt text](https://raw.githubusercontent.com/mrzigo/live_blob/master/schema.png)
 Красная форма перетекает в зеленую, первый сектор можно задать так:
 sectors[0] = {
   a: [A, A', 0, 0.01],
