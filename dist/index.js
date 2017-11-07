@@ -482,10 +482,26 @@ var Dlob = function () {
 
       clearInterval(this.id);
       setTimeout(function () {
-        // отложить удаление до 100% завершения анимации
+        // отложить удаление до завершения анимации
         _this4.canvas.lens.remove();
         _this4.canvas.dark.remove();
         _this4.canvas.glare.remove();
+        delete _this4.canvas;
+        delete _this4.layout;
+        delete _this4.context;
+        delete _this4.image;
+        delete _this4.sectors;
+        delete _this4.cyclical;
+        delete _this4.glarePrint;
+        delete _this4.stepBezier;
+        delete _this4.speed;
+        delete _this4.width;
+        delete _this4.height;
+        delete _this4.left;
+        delete _this4.top;
+        delete _this4.kof_lens;
+        delete _this4.center;
+        delete _this4.lightVector;
       }, this.speed);
     }
   }]);

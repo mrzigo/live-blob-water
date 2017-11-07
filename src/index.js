@@ -329,10 +329,26 @@ class Dlob {
 
   destroy() {
     clearInterval(this.id)
-    setTimeout(() => { // отложить удаление до 100% завершения анимации
+    setTimeout(() => { // отложить удаление до завершения анимации
       this.canvas.lens.remove()
       this.canvas.dark.remove()
       this.canvas.glare.remove()
+      delete this.canvas
+      delete this.layout
+      delete this.context
+      delete this.image
+      delete this.sectors
+      delete this.cyclical
+      delete this.glarePrint
+      delete this.stepBezier
+      delete this.speed
+      delete this.width
+      delete this.height
+      delete this.left
+      delete this.top
+      delete this.kof_lens
+      delete this.center
+      delete this.lightVector
     }, this.speed)
   }
 
