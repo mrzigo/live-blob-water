@@ -53,7 +53,7 @@ class Dlob {
     this.top = params.top || 0
     this.kof_lens = params.lens ||  0.2
     this.center = params.center || [this.width / 2, this.height / 2]
-    this.lightVector = params.lightVector || [this.width / 2 + this.width / 4, this.height / 2 + this.width / 4]
+    this.lightVector = params.lightVector || [this.width / 2 + this.width / 12, this.height / 2 + this.width / 12]
     this.render()
   }
 
