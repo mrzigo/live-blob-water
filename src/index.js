@@ -327,6 +327,15 @@ class Dlob {
     }), 1)
   }
 
+  destroy() {
+    clearInterval(this.id)
+    setTimeout(() => { // отложить удаление до 100% завершения анимации
+      this.canvas.lens.remove()
+      this.canvas.dark.remove()
+      this.canvas.glare.remove()
+    }, this.speed)
+  }
+
 }
 
 export default Dlob

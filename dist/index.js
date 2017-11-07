@@ -475,6 +475,19 @@ var Dlob = function () {
         });
       }, 1);
     }
+  }, {
+    key: 'destroy',
+    value: function destroy() {
+      var _this4 = this;
+
+      clearInterval(this.id);
+      setTimeout(function () {
+        // отложить удаление до 100% завершения анимации
+        _this4.canvas.lens.remove();
+        _this4.canvas.dark.remove();
+        _this4.canvas.glare.remove();
+      }, this.speed);
+    }
   }]);
 
   return Dlob;
