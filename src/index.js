@@ -102,7 +102,7 @@ class Dlob {
         data[origin + 0],
         data[origin + 1],
         data[origin + 2],
-        255,
+        data[origin + 3],
         'lens',
       )
     }

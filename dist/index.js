@@ -160,7 +160,7 @@ var Dlob = function () {
             originY = _ref2[1];
 
         var origin = (originX + originY * this.width) * 4;
-        this.pencil([x, y], data[origin + 0], data[origin + 1], data[origin + 2], 255, 'lens');
+        this.pencil([x, y], data[origin + 0], data[origin + 1], data[origin + 2], data[origin + 3], 'lens');
       }
     }
 
