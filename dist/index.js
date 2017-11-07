@@ -75,7 +75,7 @@ var Dlob = function () {
   _createClass(Dlob, [{
     key: 'initialize',
     value: function initialize(params) {
-      if (!params.in) return console.warn('Нет исходного jquery-елемента');
+      if (!params.in || !(params.in && params.in[0])) return console.warn('Нет исходного jquery-елемента');
       if (!params.sectors || params.sectors && params.sectors.length === 0) return console.warn('Не обазначена форма капли');
       this.el = params.out ? params.out : params.in; // разместить там же или в новое место
       this.src = params.in;
@@ -462,7 +462,8 @@ var Dlob = function () {
         alfa: atan2(dy, dx) // угол наклона
       };
       setTimeout(function () {
-        return (0, _html2canvas2.default)(_this3.src, {
+        if (!_this3.src || !(_this3.src && _this3.src[0])) return null;
+        (0, _html2canvas2.default)(_this3.src, {
           onrendered: function onrendered(canvas) {
             _this3.layout = {
               lens: _this3.context.lens.getImageData(0, 0, _this3.width, _this3.height),

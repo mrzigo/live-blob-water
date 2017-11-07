@@ -36,7 +36,7 @@ class Dlob {
   }
 
   initialize(params) {
-    if (!params.in)
+    if (!params.in || !(params.in && params.in[0]))
       return console.warn('Нет исходного jquery-елемента')
     if ((!params.sectors) || (params.sectors && params.sectors.length === 0))
       return console.warn('Не обазначена форма капли')
@@ -314,7 +314,9 @@ class Dlob {
       offset: lengthVector, // смещение
       alfa: atan2(dy, dx), // угол наклона
     }
-    setTimeout(() => html2canvas(this.src, {
+    setTimeout(() => {
+      if (!this.src || !(this.src && this.src[0])) return null
+      html2canvas(this.src, {
         onrendered: (canvas) => {
           this.layout = {
             lens: this.context.lens.getImageData(0, 0, this.width, this.height),
@@ -324,7 +326,8 @@ class Dlob {
           this.image.src = canvas.toDataURL()
           this.image.onload = this.loadImage
         }
-    }), 1)
+      })
+    }, 1)
   }
 
   destroy() {
