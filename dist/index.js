@@ -88,7 +88,7 @@ var Dlob = function () {
       this.height = params.height || 100;
       this.left = params.left || 0;
       this.top = params.top || 0;
-      this.kof_lens = params.lens || 0.2;
+      this.kofLens = params.lens || 0.2;
       this.center = params.center || [this.width / 2, this.height / 2];
       this.lightVector = params.lightVector || [this.width / 2 + this.width / 12, this.height / 2 + this.width / 12];
       this.render();
@@ -154,13 +154,13 @@ var Dlob = function () {
             x = _ref[0],
             y = _ref[1];
 
-        var k = r / length * (r / length) * this.kof_lens + 1; // коэфициент линзы
+        var k = r / length * (r / length) * this.kofLens + 1; // коэфициент линзы
         var _ref2 = [round(x1 + cos(a) * r * k), round(y1 + sin(a) * r * k)],
             originX = _ref2[0],
             originY = _ref2[1];
 
         var origin = (originX + originY * this.width) * 4;
-        this.pencil([x, y], data[origin + 0], data[origin + 1], data[origin + 2], data[origin + 3], 'lens');
+        this.pencil([x, y], data[origin + 0], data[origin + 1], data[origin + 2], 255, 'lens');
       }
     }
 
@@ -499,7 +499,7 @@ var Dlob = function () {
         delete _this4.height;
         delete _this4.left;
         delete _this4.top;
-        delete _this4.kof_lens;
+        delete _this4.kofLens;
         delete _this4.center;
         delete _this4.lightVector;
       }, this.speed);

@@ -51,7 +51,7 @@ class Dlob {
     this.height = params.height || 100
     this.left = params.left || 0
     this.top = params.top || 0
-    this.kof_lens = params.lens ||  0.2
+    this.kofLens = params.lens ||  0.2
     this.center = params.center || [this.width / 2, this.height / 2]
     this.lightVector = params.lightVector || [this.width / 2 + this.width / 12, this.height / 2 + this.width / 12]
     this.render()
@@ -94,7 +94,7 @@ class Dlob {
     const a = atan2(y2-y1, x2-x1)
     for (let r = 0; r <= length; r = r + 1) {
       const [x, y] = [round(x1+cos(a)*r), round(y1+sin(a)*r)]
-      const k = (r / length) * (r / length) * this.kof_lens + 1 // коэфициент линзы
+      const k = (r / length) * (r / length) * this.kofLens + 1 // коэфициент линзы
       const [originX, originY] = [round(x1+cos(a)*r*k), round(y1+sin(a)*r*k)]
       const origin = (originX + originY * this.width) * 4
       this.pencil(
@@ -102,7 +102,7 @@ class Dlob {
         data[origin + 0],
         data[origin + 1],
         data[origin + 2],
-        data[origin + 3],
+        255,
         'lens',
       )
     }
@@ -346,7 +346,7 @@ class Dlob {
       delete this.height
       delete this.left
       delete this.top
-      delete this.kof_lens
+      delete this.kofLens
       delete this.center
       delete this.lightVector
     }, this.speed)
