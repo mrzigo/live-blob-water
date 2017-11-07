@@ -45,6 +45,7 @@ class Dlob {
     this.sectors = params.sectors
     this.cyclical = params.cyclical !== undefined ? params.cyclical : true
     this.glarePrint = params.glare !== undefined ? params.glare : true
+    this.stepBezier = params.stepBezier !== undefined ? params.stepBezier : 0.02
     this.speed = params.speed || 100
     this.width = params.width || 100
     this.height = params.height || 100
@@ -117,7 +118,8 @@ class Dlob {
   // рисует кривую Безье по трем опорным точкам
   curve(A, A2B, B) {
     const { center: O } = this
-    for (let t = 0; t <= 1; t = t + 0.02) {
+    const step = this.stepBezier
+    for (let t = 0; t <= 1; t = t + step) {
       const P = getCoord(A, A2B, B, t)
       this.lensEffect(P)
       this.cant(P, O)

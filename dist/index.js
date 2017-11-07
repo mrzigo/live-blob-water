@@ -82,6 +82,7 @@ var Dlob = function () {
       this.sectors = params.sectors;
       this.cyclical = params.cyclical !== undefined ? params.cyclical : true;
       this.glarePrint = params.glare !== undefined ? params.glare : true;
+      this.stepBezier = params.stepBezier !== undefined ? params.stepBezier : 0.02;
       this.speed = params.speed || 100;
       this.width = params.width || 100;
       this.height = params.height || 100;
@@ -180,7 +181,8 @@ var Dlob = function () {
     value: function curve(A, A2B, B) {
       var O = this.center;
 
-      for (var t = 0; t <= 1; t = t + 0.02) {
+      var step = this.stepBezier;
+      for (var t = 0; t <= 1; t = t + step) {
         var P = getCoord(A, A2B, B, t);
         this.lensEffect(P);
         this.cant(P, O);
