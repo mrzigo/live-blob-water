@@ -20,7 +20,6 @@ const blobData = {
   cyclical: true,            // капля претекает из формы_1 в форму_2 (об этом ниже (1))
   out: $('.canvases'),       // jquery элемент в который будет добавлен (append) canvas с искаженным изображением, default = in-element
   in: $('.el-with-water'),   // jquery элемент из которого будет сформировано изображение для искажения
-  speed: 100,                // скорость перетекания (setInterval), default = 100
   stepBezier: 0.02,          // Шаг построения кривой (чем больше "радиус" капли тем меньше шаг), default = 0.02
   width: 100,                // ширина canvas, default = 100
   height: 100,               // высота canvas, default = 100

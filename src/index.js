@@ -13,7 +13,7 @@ import {
   getCoord,
 } from './math'
 
-class Dlob {
+class Blob {
   constructor(params) {
     this.initialize = this.initialize.bind(this)
     this.point = this.point.bind(this)
@@ -32,6 +32,12 @@ class Dlob {
     this.generateCanvas = this.generateCanvas.bind(this)
     this.loadImage = this.loadImage.bind(this)
     this.render = this.render.bind(this)
+    window.requestAnimFrame = window.requestAnimationFrame ||
+                            window.webkitRequestAnimationFrame ||
+                            window.mozRequestAnimationFrame ||
+                            window.oRequestAnimationFrame ||
+                            window.msRequestAnimationFrame ||
+                            ((callback, element) => {window.setTimeout(callback, 1000/60)})
     this.initialize(params)
   }
 
@@ -46,7 +52,6 @@ class Dlob {
     this.cyclical = params.cyclical !== undefined ? params.cyclical : true
     this.glarePrint = params.glare !== undefined ? params.glare : true
     this.stepBezier = params.stepBezier !== undefined ? params.stepBezier : 0.02
-    this.speed = params.speed || 100
     this.width = params.width || 100
     this.height = params.height || 100
     this.left = params.left || 0
@@ -262,6 +267,9 @@ class Dlob {
   }
 
   animation() {
+    if (this.cyclical) {
+      window.requestAnimFrame(this.animation)
+    }
     const points = this.genReferencePoints()
     this.context.lens.putImageData(this.layout.origin, 0, 0)
     points.forEach(sector => this.curve(sector.a, sector.b, sector.c)) // TODO разделить на кривую и линзу
@@ -286,7 +294,6 @@ class Dlob {
   loadImage() {
     this.context.lens.drawImage(this.image, this.left, this.top, this.width, this.height, 0, 0, this.width, this.height)
     this.layout.origin = this.context.lens.getImageData(0, 0, this.width, this.height)
-    this.id = setInterval(() => this.animation(), this.speed)
     this.animation()
     this.el.append(this.canvas.lens) // отдаем наложение слоев браузеру
     this.el.append(this.canvas.dark)
@@ -332,7 +339,8 @@ class Dlob {
 
   destroy() {
     clearInterval(this.id)
-    setTimeout(() => { // отложить удаление до завершения анимации
+    window.requestAnimFrame(() => { // отложить удаление до завершения анимации
+      this.cyclical = false
       this.canvas.lens.remove()
       this.canvas.dark.remove()
       this.canvas.glare.remove()
@@ -344,7 +352,6 @@ class Dlob {
       delete this.cyclical
       delete this.glarePrint
       delete this.stepBezier
-      delete this.speed
       delete this.width
       delete this.height
       delete this.left
@@ -352,9 +359,9 @@ class Dlob {
       delete this.kofLens
       delete this.center
       delete this.lightVector
-    }, this.speed)
+    })
   }
 
 }
 
-export default Dlob
+export default Blob

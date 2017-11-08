@@ -48,9 +48,9 @@ var getCoord = function getCoord(A, A2B, B, t) {
   round((1 - t) * (1 - t) * A[1] + 2 * (1 - t) * t * A2B[1] + t * t * B[1])];
 };
 
-var Dlob = function () {
-  function Dlob(params) {
-    _classCallCheck(this, Dlob);
+var Blob = function () {
+  function Blob(params) {
+    _classCallCheck(this, Blob);
 
     this.initialize = this.initialize.bind(this);
     this.point = this.point.bind(this);
@@ -69,10 +69,13 @@ var Dlob = function () {
     this.generateCanvas = this.generateCanvas.bind(this);
     this.loadImage = this.loadImage.bind(this);
     this.render = this.render.bind(this);
+    window.requestAnimFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (callback, element) {
+      window.setTimeout(callback, 1000 / 60);
+    };
     this.initialize(params);
   }
 
-  _createClass(Dlob, [{
+  _createClass(Blob, [{
     key: 'initialize',
     value: function initialize(params) {
       if (!params.in || !(params.in && params.in[0])) return console.warn('Нет исходного jquery-елемента');
@@ -83,7 +86,6 @@ var Dlob = function () {
       this.cyclical = params.cyclical !== undefined ? params.cyclical : true;
       this.glarePrint = params.glare !== undefined ? params.glare : true;
       this.stepBezier = params.stepBezier !== undefined ? params.stepBezier : 0.02;
-      this.speed = params.speed || 100;
       this.width = params.width || 100;
       this.height = params.height || 100;
       this.left = params.left || 0;
@@ -388,6 +390,9 @@ var Dlob = function () {
     value: function animation() {
       var _this = this;
 
+      if (this.cyclical) {
+        window.requestAnimFrame(this.animation);
+      }
       var points = this.genReferencePoints();
       this.context.lens.putImageData(this.layout.origin, 0, 0);
       points.forEach(function (sector) {
@@ -416,13 +421,8 @@ var Dlob = function () {
   }, {
     key: 'loadImage',
     value: function loadImage() {
-      var _this2 = this;
-
       this.context.lens.drawImage(this.image, this.left, this.top, this.width, this.height, 0, 0, this.width, this.height);
       this.layout.origin = this.context.lens.getImageData(0, 0, this.width, this.height);
-      this.id = setInterval(function () {
-        return _this2.animation();
-      }, this.speed);
       this.animation();
       this.el.append(this.canvas.lens); // отдаем наложение слоев браузеру
       this.el.append(this.canvas.dark);
@@ -431,7 +431,7 @@ var Dlob = function () {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
+      var _this2 = this;
 
       var _center2 = _slicedToArray(this.center, 2),
           x1 = _center2[0],
@@ -462,16 +462,16 @@ var Dlob = function () {
         alfa: atan2(dy, dx) // угол наклона
       };
       setTimeout(function () {
-        if (!_this3.src || !(_this3.src && _this3.src[0])) return null;
-        (0, _html2canvas2.default)(_this3.src, {
+        if (!_this2.src || !(_this2.src && _this2.src[0])) return null;
+        (0, _html2canvas2.default)(_this2.src, {
           onrendered: function onrendered(canvas) {
-            _this3.layout = {
-              lens: _this3.context.lens.getImageData(0, 0, _this3.width, _this3.height),
-              dark: _this3.context.lens.getImageData(0, 0, _this3.width, _this3.height),
-              glare: _this3.context.lens.getImageData(0, 0, _this3.width, _this3.height)
+            _this2.layout = {
+              lens: _this2.context.lens.getImageData(0, 0, _this2.width, _this2.height),
+              dark: _this2.context.lens.getImageData(0, 0, _this2.width, _this2.height),
+              glare: _this2.context.lens.getImageData(0, 0, _this2.width, _this2.height)
             };
-            _this3.image.src = canvas.toDataURL();
-            _this3.image.onload = _this3.loadImage;
+            _this2.image.src = canvas.toDataURL();
+            _this2.image.onload = _this2.loadImage;
           }
         });
       }, 1);
@@ -479,35 +479,35 @@ var Dlob = function () {
   }, {
     key: 'destroy',
     value: function destroy() {
-      var _this4 = this;
+      var _this3 = this;
 
       clearInterval(this.id);
-      setTimeout(function () {
+      window.requestAnimFrame(function () {
         // отложить удаление до завершения анимации
-        _this4.canvas.lens.remove();
-        _this4.canvas.dark.remove();
-        _this4.canvas.glare.remove();
-        delete _this4.canvas;
-        delete _this4.layout;
-        delete _this4.context;
-        delete _this4.image;
-        delete _this4.sectors;
-        delete _this4.cyclical;
-        delete _this4.glarePrint;
-        delete _this4.stepBezier;
-        delete _this4.speed;
-        delete _this4.width;
-        delete _this4.height;
-        delete _this4.left;
-        delete _this4.top;
-        delete _this4.kofLens;
-        delete _this4.center;
-        delete _this4.lightVector;
-      }, this.speed);
+        _this3.cyclical = false;
+        _this3.canvas.lens.remove();
+        _this3.canvas.dark.remove();
+        _this3.canvas.glare.remove();
+        delete _this3.canvas;
+        delete _this3.layout;
+        delete _this3.context;
+        delete _this3.image;
+        delete _this3.sectors;
+        delete _this3.cyclical;
+        delete _this3.glarePrint;
+        delete _this3.stepBezier;
+        delete _this3.width;
+        delete _this3.height;
+        delete _this3.left;
+        delete _this3.top;
+        delete _this3.kofLens;
+        delete _this3.center;
+        delete _this3.lightVector;
+      });
     }
   }]);
 
-  return Dlob;
+  return Blob;
 }();
 
-exports.default = Dlob;
+exports.default = Blob;
