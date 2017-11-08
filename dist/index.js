@@ -196,14 +196,9 @@ var Blob = function () {
   }, {
     key: 'dark',
     value: function dark(A, A2B, B) {
-      var O = this.center,
-          darkData = this.darkData,
-          _lightParams = this.lightParams,
+      var _lightParams = this.lightParams,
           length = _lightParams.length,
-          offset = _lightParams.offset,
           alfa = _lightParams.alfa;
-      var kcos = cos(alfa) * offset,
-          ksin = sin(alfa) * offset;
 
       for (var t = 0; t <= 1; t = t + 0.01) {
         var _getCoord = getCoord(A, A2B, B, t),
@@ -263,7 +258,6 @@ var Blob = function () {
           y1 = _O[1];
 
       var a = atan2(V[1] - y1, V[0] - x1) + PI + alfa;
-      var length = lengthVector(O, V); // если перейти на смещение тени на длинну вектора, тут длинну сменить на ширину картинки
       var len = 0,
           resP = void 0,
           P = void 0;
@@ -458,7 +452,6 @@ var Blob = function () {
       };
       this.lightParams = { // параметры тени
         length: lengthVector$$1, // длинна
-        offset: lengthVector$$1, // смещение
         alfa: atan2(dy, dx) // угол наклона
       };
       setTimeout(function () {

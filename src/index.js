@@ -133,8 +133,7 @@ class Blob {
 
   // Рисует тень по кривой Безье через три опорные точки
   dark(A, A2B, B) {
-    const { center: O, darkData, lightParams: { length, offset, alfa } } = this
-    const [kcos, ksin] = [cos(alfa)*offset, sin(alfa)*offset]
+    const { lightParams: { length, alfa } } = this
     for (let t = 0; t <= 1; t = t + 0.01) {
       const [px, py] = getCoord(A, A2B, B, t)
       for (let r = 0; r <= length; r = r + 1) {
@@ -174,7 +173,6 @@ class Blob {
     } = this
     const [x1, y1] = O
     const a = atan2(V[1]-y1, V[0]-x1) + PI + alfa
-    const length = lengthVector(O, V) // если перейти на смещение тени на длинну вектора, тут длинну сменить на ширину картинки
     let len = 0, resP, P
     for (let r = 0; r <= width; r++) {
       P = getDelta(O, r, a)
@@ -318,7 +316,6 @@ class Blob {
     }
     this.lightParams = { // параметры тени
       length: lengthVector, // длинна
-      offset: lengthVector, // смещение
       alfa: atan2(dy, dx), // угол наклона
     }
     setTimeout(() => {
